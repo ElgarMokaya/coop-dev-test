@@ -1,0 +1,31 @@
+version: '3.8'
+
+services:
+  mysql:
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: Elgar2024!
+      MYSQL_DATABASE: transaction_db
+    ports:
+      - "3306:3306"
+    networks:
+      - transaction-network
+
+  transaction-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8086:8086"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:mysql://mysql:3306/transaction_db
+      - SPRING_DATASOURCE_USERNAME=root
+      - SPRING_DATASOURCE_PASSWORD=Elgar2024!
+    depends_on:
+      - mysql
+    networks:
+      - transaction-network
+
+networks:
+  transaction-network:
+    driver: bridge
