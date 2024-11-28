@@ -2,6 +2,8 @@ package com.example.Transaction.model;
 
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.Positive;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -9,9 +11,11 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDateTime;
 
 @Entity
+@Table(name = "customer_details")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+
 public class CustomerDetails {
 
 
@@ -29,12 +33,15 @@ public class CustomerDetails {
     private String transactionId;
 
     @Column(nullable = false)
+    @NotEmpty(message = "Source account is required")
     private String sourceAccount;
 
     @Column(nullable = false)
+    @NotEmpty(message = "Destination account is required")
     private String destinationAccount;
 
     @Column(nullable = false)
+    @Positive(message = "Amount should be positive")
     private Double amount;
 
     @Column(nullable = false)
